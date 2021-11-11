@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Android3_1</string>
+    <string name="numero_1">Numero 1:</string>
+    <string name="numero_2">Numero 2:</string>
+    <string name="resultado">Resultado:</string>
+    <string name="operate">Operate</string>
 </resources>
