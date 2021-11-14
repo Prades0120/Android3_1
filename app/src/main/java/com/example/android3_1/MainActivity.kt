@@ -2,10 +2,8 @@ package com.example.android3_1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,15 +18,17 @@ class MainActivity : AppCompatActivity() {
         operaciones.add("Dividir")
         val spinner: Spinner = findViewById(R.id.spinner)
         val button: Button = findViewById(R.id.button)
-        val num1: EditText = findViewById(R.id.editTextNumber)
-        val num2: EditText = findViewById(R.id.editTextNumber2)
-        val resultado: EditText = findViewById(R.id.editTextNumber3)
+        val editText1: EditText = findViewById(R.id.editTextNumber)
+        val editText2: EditText = findViewById(R.id.editTextNumber2)
+        val resultado: TextView = findViewById(R.id.editTextNumber3)
+
+        button.isClickable = false
 
         spinner.adapter = ArrayAdapter(applicationContext,android.R.layout.simple_spinner_dropdown_item,operaciones)
 
-        spinner.setOnItemClickListener { adapterView, view, i, l ->
-            if (operaciones[spinner.selectedItemPosition]!=operaciones[0]) {
-                if (num1.text.toString() != "" && num2.text.toString()!="") {
+        editText1.setOnClickListener {
+            if (spinner.selectedItem!=operaciones[0]) {
+                if (editText1.text.toString() != "" && editText2.text.toString()!="") {
                     button.isClickable = true
                     button.setBackgroundColor(resources.getColor(R.color.purple_500))
                 }else {
@@ -39,6 +39,54 @@ class MainActivity : AppCompatActivity() {
                 button.isClickable = false
                 button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
             }
+        }
+
+        editText2.setOnClickListener {
+            if (spinner.selectedItem!=operaciones[0]) {
+                if (editText1.text.toString() != "" && editText2.text.toString()!="") {
+                    button.isClickable = true
+                    button.setBackgroundColor(resources.getColor(R.color.purple_500))
+                }else {
+                    button.isClickable = false
+                    button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
+                }
+            }else{
+                button.isClickable = false
+                button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
+            }
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                button.isClickable = false
+                button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (spinner.selectedItem != operaciones[0]) {
+                    if (editText1.text.toString() != "" && editText2.text.toString() != "") {
+                        button.isClickable = true
+                        button.setBackgroundColor(resources.getColor(R.color.purple_500))
+                    } else {
+                        button.isClickable = false
+                        button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
+                    }
+                } else {
+                    button.isClickable = false
+                    button.setBackgroundColor(resources.getColor(R.color.purple_500_faded))
+                }
+            }
+        }
+        button.setOnClickListener {
+            val num1 = editText1.text.toString().toInt()
+            val num2 = editText2.text.toString().toInt()
+            val res = num1 + num2
+            resultado.text = res.toString()
         }
     }
 }
