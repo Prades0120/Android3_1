@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button)
         val editText1: EditText = findViewById(R.id.editTextNumber)
         val editText2: EditText = findViewById(R.id.editTextNumber2)
-        val resultado: TextView = findViewById(R.id.editTextNumber3)
+        val textView: TextView = findViewById(R.id.resultado)
 
         button.isClickable = false
 
@@ -85,8 +85,16 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             val num1 = editText1.text.toString().toInt()
             val num2 = editText2.text.toString().toInt()
-            val res = num1 + num2
-            resultado.text = res.toString()
+            var res= -1
+            if (spinner.selectedItem == operaciones[1])
+                res = num1+num2
+            else if (spinner.selectedItem == operaciones[2])
+                res = num1-num2
+            else if (spinner.selectedItem == operaciones[3])
+                res = num1*num2
+            else if (spinner.selectedItem == operaciones[4] && num2 != 0)
+                res = num1/num2
+            textView.text = res.toString()
         }
     }
 }
