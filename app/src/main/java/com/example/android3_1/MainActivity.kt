@@ -1,5 +1,6 @@
 package com.example.android3_1
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button)
         val editText1: EditText = findViewById(R.id.editTextNumber)
         val editText2: EditText = findViewById(R.id.editTextNumber2)
-        val textView: TextView = findViewById(R.id.resultado)
 
         button.isClickable = false
 
@@ -94,7 +94,12 @@ class MainActivity : AppCompatActivity() {
                 res = num1*num2
             else if (spinner.selectedItem == operaciones[4] && num2 != 0)
                 res = num1/num2
-            textView.text = res.toString()
+            startResult(res)
         }
+    }
+    fun startResult(extra: Int) {
+    val i = Intent(this, Result::class.java)
+        i.putExtra("result",extra)
+        startActivity(i)
     }
 }
